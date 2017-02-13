@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:elevation="2dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <LinearLayout
+            android:layout_marginTop="14dp"
+            android:background="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <ImageView
+                android:id="@+id/home_button"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:padding="8dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:tint="#ccc"
+                android:background="@null"
+                android:src="@drawable/home_selected"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:padding="8dp"
+                android:layout_margin="8dp"
+                android:tint="#ccc"
+                android:layout_weight="1"
+                android:visibility="invisible"
+                android:background="@null"
+                android:src="@drawable/home_selected"/>
+
+            <ImageView
+                android:id="@+id/projects_button"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:padding="8dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:tint="#ccc"
+                android:background="@null"
+                android:src="@drawable/project_unselected"/>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/fab_add"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/ripple_fab"
+            android:elevation="8dp"
+            android:tint="#fff"
+            android:layout_marginLeft="14dp"
+            android:src="@drawable/ic_add_black_24dp"/>
+
+
+
+
+
+    </FrameLayout>
+
+
+</RelativeLayout>
