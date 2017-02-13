@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:elevation="4dp"
+        android:foreground="?android:selectableItemBackground"
+        android:clickable="true"
+        android:layout_margin="8dp"
+        android:hapticFeedbackEnabled="true">
+
+        <com.deepakbaliga.getdone.customViews.CircularImageView
+            android:id="@+id/category_color"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="18dp"
+            android:layout_centerHorizontal="true"
+            android:tint="#aaa"
+            android:src="@drawable/circle" />
+
+        <com.deepakbaliga.getdone.customViews.CircularImageView
+            android:id="@+id/category_icon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="18dp"
+            android:padding="18dp"
+            android:src="@drawable/icon_add_category"
+            android:tint="#aaa"
+            android:layout_centerHorizontal="true"/>
+
+        <com.deepakbaliga.getdone.customViews.RegularTextView
+            android:id="@+id/category_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/category_icon"
+            android:text="Add Category"
+            android:layout_marginTop="26dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:textSize="18dp"
+            android:textColor="#aaa"
+            android:layout_marginBottom="18dp"
+            android:layout_centerInParent="true"/>
+
+
+
+
+    </RelativeLayout>
+</RelativeLayout>

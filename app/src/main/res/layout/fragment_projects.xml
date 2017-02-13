@@ -1,22 +1,34 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.deepakbaliga.getdone.fragments.ProjectsFragment">
+    tools:context="com.deepakbaliga.getdone.fragments.ProjectsFragment"
+    >
 
-    <RelativeLayout
+    <com.deepakbaliga.getdone.customViews.ThinTextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:text="Categories"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/grey"
+        android:layout_margin="18dp"/>
+
+    <ImageView
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_settings"
+        android:tint="@color/grey"
+        android:layout_alignParentRight="true"
+        android:layout_margin="18dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/categories_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_below="@+id/title"/>
 
-        <com.deepakbaliga.getdone.customViews.ThinTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PROJECTS"
-            android:textColor="#aaa"
-            android:textSize="36sp"
-            android:layout_centerInParent="true"/>
-
-
-    </RelativeLayout>
-
-</FrameLayout>
+</RelativeLayout>

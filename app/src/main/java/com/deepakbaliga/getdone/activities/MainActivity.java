@@ -67,6 +67,8 @@ public class MainActivity extends GetDoneActivity {
             @Override
             public void onClick(View view) {
 
+                viewPager.setCurrentItem(0, true);
+
                 if (!homeTarget)
                     toggle();
 
@@ -78,6 +80,8 @@ public class MainActivity extends GetDoneActivity {
         projectsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                viewPager.setCurrentItem(1, true);
 
                 if (homeTarget)
                 toggle();
