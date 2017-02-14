@@ -1,6 +1,7 @@
 package com.deepakbaliga.getdone.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -90,6 +91,16 @@ public class MainActivity extends GetDoneActivity {
             }
         });
 
+        floatingActionBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, CreateToDoActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
     }
 
     private void toggle() {
@@ -111,4 +122,6 @@ public class MainActivity extends GetDoneActivity {
 
 
     }
+
+
 }
