@@ -3,6 +3,7 @@ package com.deepakbaliga.getdone.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
@@ -96,7 +97,11 @@ public class MainActivity extends GetDoneActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(MainActivity.this, CreateToDoActivity.class);
-                startActivity(intent);
+
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(MainActivity.this, floatingActionBar, "add_button");
+
+                startActivity(intent, options.toBundle());
 
             }
         });

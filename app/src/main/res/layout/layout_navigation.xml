@@ -61,6 +61,7 @@
             android:elevation="8dp"
             android:tint="#fff"
             android:layout_marginLeft="14dp"
+            android:transitionName="add_button"
             android:src="@drawable/ic_add_black_24dp"/>
 
 
