@@ -53,13 +53,13 @@ public class ProjectsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_projects, container, false);
         ButterKnife.bind(this, view);
 
-        categories.add(new Category("Personal", 43, R.drawable.icon_person, R.color.alizarin));
-        categories.add(new Category("Work", 235, R.drawable.icon_work, R.color.amethyst));
-        categories.add(new Category("Meet", 3, R.drawable.icon_happy_mood, R.color.peter_river));
-        categories.add(new Category("Home", 113, R.drawable.icon_home, R.color.emerald));
-        categories.add(new Category("School", 23, R.drawable.icon_school, R.color.sun_flower));
-        categories.add(new Category("Earth", 0, R.drawable.icon_earth, R.color.green_sea));
-        categories.add(new Category("Universe", 7, R.drawable.icon_star, R.color.clouds));
+        categories.add(new Category((long)(Math.random()*1000000),"Personal", 43, R.drawable.icon_person, R.color.alizarin,false,0));
+        categories.add(new Category((long)(Math.random()*1000000),"Work", 235, R.drawable.icon_work, R.color.amethyst,false,0));
+        categories.add(new Category((long)(Math.random()*1000000),"Meet", 3, R.drawable.icon_happy_mood, R.color.peter_river,false,0));
+        categories.add(new Category((long)(Math.random()*1000000),"Home", 113, R.drawable.icon_home, R.color.emerald,false,0));
+        categories.add(new Category((long)(Math.random()*1000000),"School", 23, R.drawable.icon_school, R.color.sun_flower,false,0));
+        categories.add(new Category((long)(Math.random()*1000000),"Earth", 0, R.drawable.icon_earth, R.color.green_sea,false,0));
+        categories.add(new Category((long)(Math.random()*1000000),"Universe", 7, R.drawable.icon_star, R.color.clouds,false,0));
 
 
         gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayout.VERTICAL, false);

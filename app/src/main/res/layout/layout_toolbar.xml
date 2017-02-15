@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="5"
+    android:layout_margin="14dp">
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:tint="@color/light_grey"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:padding="4dp"
+        android:foreground="?android:selectableItemBackground"
+        android:src="@drawable/tool_icon_date"
+        android:background="@drawable/ripple_rectangle_transperant"/>
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:tint="@color/light_grey"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:padding="4dp"
+        android:foreground="?android:selectableItemBackground"
+        android:background="@drawable/ripple_rectangle_transperant"
+        android:src="@drawable/tool_icon_reminder"/>
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:tint="@color/light_grey"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:padding="4dp"
+        android:foreground="?android:selectableItemBackground"
+        android:background="@drawable/ripple_rectangle_transperant"
+        android:src="@drawable/tool_icon_comment"/>
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:tint="@color/light_grey"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:padding="4dp"
+        android:foreground="?android:selectableItemBackground"
+        android:background="@drawable/ripple_rectangle_transperant"
+        android:src="@drawable/tool_icon_attachment"/>
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:tint="@color/light_grey"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:padding="4dp"
+        android:foreground="?android:selectableItemBackground"
+        android:background="@drawable/ripple_rectangle_transperant"
+        android:src="@drawable/tool_icon_voice"/>
+
+
+</LinearLayout>

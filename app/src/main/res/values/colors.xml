@@ -31,4 +31,5 @@
     <color name="asbestos">#7f8c8d</color>
 
     <color name="grey">#aaa</color>
+    <color name="light_grey">#ddd</color>
 </resources>

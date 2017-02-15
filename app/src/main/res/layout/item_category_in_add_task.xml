@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:clickable="true"
+    android:layout_marginTop="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginBottom="8dp"
+    android:gravity="center"
+    android:foreground="?android:selectableItemBackground">
+
+    <com.deepakbaliga.getdone.customViews.CircularImageView
+        android:id="@+id/category_color"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:src="@drawable/circle"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="16dp"/>
+
+    <com.deepakbaliga.getdone.customViews.RegularTextView
+        android:id="@+id/category_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category"
+        android:textColor="@color/grey"
+        android:textSize="14dp" />
+
+</LinearLayout>
