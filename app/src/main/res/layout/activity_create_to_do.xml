@@ -54,6 +54,7 @@
         android:layout_below="@+id/toolbar">
 
         <com.deepakbaliga.getdone.customViews.ThinEditTextView
+            android:id="@+id/todo_edit_text"
             android:layout_width="match_parent"
             android:layout_height="192dp"
             android:maxLines="6"
@@ -67,7 +68,7 @@
             android:gravity="top" />
 
         <View
-
+            android:id="@+id/line_one"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/light_grey"
@@ -84,7 +85,7 @@
             android:clipToPadding="false"/>
 
         <View
-
+            android:id="@+id/line_two"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/light_grey"
@@ -102,7 +103,7 @@
             layout="@layout/layout_toolbar"/>
 
         <View
-
+            android:id="@+id/line_three"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/light_grey"

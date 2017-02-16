@@ -33,7 +33,7 @@ public class WheelDayPicker extends WheelPicker {
     public WheelDayPicker(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        this.simpleDateFormat = new SimpleDateFormat("EEE d MMM", getCurrentLocale());
+        this.simpleDateFormat = new SimpleDateFormat("EEEE d MMMM", getCurrentLocale());
         this.adapter = new Adapter();
         setAdapter(adapter);
 
@@ -51,6 +51,19 @@ public class WheelDayPicker extends WheelPicker {
         }
     }
 
+    public void setDateFormatToFull(){
+        this.simpleDateFormat = new SimpleDateFormat("EEEE d MMMM", getCurrentLocale());
+        updateDays();
+        updateDefaultDay();
+
+    }
+
+    public void setDateFormatToHalf(){
+        this.simpleDateFormat = new SimpleDateFormat("EEE d MMM", getCurrentLocale());
+        updateDays();
+        updateDefaultDay();
+
+    }
     @Override
     protected void onItemCurrentScroll(int position, Object item) {
 

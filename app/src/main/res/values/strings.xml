@@ -5,7 +5,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="picker_today">today</string>
+    <string name="picker_today">Today</string>
     <string name="picker_am">AM</string>
     <string name="picker_pm">PM</string>
 </resources>

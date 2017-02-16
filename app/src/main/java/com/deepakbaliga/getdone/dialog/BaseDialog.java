@@ -9,11 +9,10 @@ import com.deepakbaliga.getdone.widget.WheelMinutePicker;
 
 import java.util.Date;
 
-/**
- * Created by nor on 1/2/2017.
- */
+
 
 public abstract class BaseDialog {
+
     public static final int DEFAULT_ITEM_COUNT_MODE_CURVED = 7;
     public static final int DEFAULT_ITEM_COUNT_MODE_NORMAL = 5;
 

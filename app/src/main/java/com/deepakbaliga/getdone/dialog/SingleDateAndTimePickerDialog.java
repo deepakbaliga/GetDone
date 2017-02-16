@@ -4,7 +4,9 @@ import android.content.Context;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.SwitchCompat;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -21,6 +23,8 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
     private Listener listener;
     private BottomSheetHelper bottomSheetHelper;
     private SingleDateAndTimePicker picker;
+    private SwitchCompat timeSwitch;
+
 
     @Nullable
     private String title;
@@ -55,6 +59,32 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
 
     private void init(View view) {
         picker = (SingleDateAndTimePicker) view.findViewById(R.id.picker);
+
+        timeSwitch = (SwitchCompat) view.findViewById(R.id.switch_enable_timing);
+
+        if(timeSwitch!=null){
+
+            timeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(b){
+                        //Enable Timing
+
+                        picker.showTimingsView();
+                        picker.getDaysPicker().setmItemAlign(0);
+                        picker.getDaysPicker().setDateFormatToHalf();
+
+                    }else{
+
+                        //DisableTiming
+                        picker.hideTimingsView();
+                        picker.getDaysPicker().setmItemAlign(0);
+                        picker.getDaysPicker().setDateFormatToFull();
+                    }
+                }
+            });
+        }
+
 
         final ImageButton buttonOk = (ImageButton) view.findViewById(R.id.buttonOk);
         if (buttonOk != null) {
@@ -179,12 +209,12 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
         bottomSheetHelper.hide();
 
         if (listener != null && okClicked) {
-            listener.onDateSelected(picker.getDate());
+            listener.onDateSelected(picker.getDate(), timeSwitch.isChecked());
         }
     }
 
     public interface Listener {
-        void onDateSelected(Date date);
+        void onDateSelected(Date date, boolean isThereTime);
     }
 
     public static class Builder {
@@ -287,6 +317,7 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
         }
 
 
+
         public SingleDateAndTimePickerDialog build() {
             final SingleDateAndTimePickerDialog dialog = new SingleDateAndTimePickerDialog(context, bottomSheet)
                     .setTitle(title)
@@ -322,6 +353,10 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
             if (dialog != null) {
                 dialog.close();
             }
+        }
+
+        public boolean isClosed(){
+            return dialog.isDisplaying();
         }
     }
 }

@@ -66,12 +66,15 @@ public class SingleDateAndTimePicker extends LinearLayout {
         init(context, attrs);
         inflate(context, R.layout.single_day_picker, this);
 
-        isAmPm = !(DateFormat.is24HourFormat(context));
+        isAmPm = true;
 
         daysPicker = (WheelDayPicker) findViewById(R.id.daysPicker);
         minutesPicker = (WheelMinutePicker) findViewById(R.id.minutesPicker);
         hoursPicker = (WheelHourPicker) findViewById(R.id.hoursPicker);
         amPmPicker = (WheelAmPmPicker) findViewById(R.id.amPmPicker);
+        hideTimingsView();
+
+
         dtSelector = findViewById(R.id.dtSelector);
 
         daysPicker.setOnDaySelectedListener(new WheelDayPicker.OnDaySelectedListener() {
@@ -136,6 +139,53 @@ public class SingleDateAndTimePicker extends LinearLayout {
         updateViews();
     }
 
+    public WheelDayPicker getDaysPicker() {
+        return daysPicker;
+    }
+
+    public void setDaysPicker(WheelDayPicker daysPicker) {
+        this.daysPicker = daysPicker;
+    }
+
+    public WheelMinutePicker getMinutesPicker() {
+        return minutesPicker;
+    }
+
+    public void setMinutesPicker(WheelMinutePicker minutesPicker) {
+        this.minutesPicker = minutesPicker;
+    }
+
+    public WheelHourPicker getHoursPicker() {
+        return hoursPicker;
+    }
+
+    public void setHoursPicker(WheelHourPicker hoursPicker) {
+        this.hoursPicker = hoursPicker;
+    }
+
+    public WheelAmPmPicker getAmPmPicker() {
+        return amPmPicker;
+    }
+
+    public void setAmPmPicker(WheelAmPmPicker amPmPicker) {
+        this.amPmPicker = amPmPicker;
+    }
+
+    public void hideTimingsView(){
+
+        hoursPicker.setVisibility(GONE);
+        amPmPicker.setVisibility(GONE);
+        minutesPicker.setVisibility(GONE);
+
+    }
+
+    public void showTimingsView(){
+        hoursPicker.setVisibility(VISIBLE);
+        amPmPicker.setVisibility(VISIBLE);
+        minutesPicker.setVisibility(VISIBLE);
+
+    }
+
     public void setCurved(boolean curved) {
         isCurved = curved;
         updatePicker();
@@ -197,6 +247,7 @@ public class SingleDateAndTimePicker extends LinearLayout {
     }
 
     private void updatePicker() {
+
         if (daysPicker != null && minutesPicker != null && hoursPicker != null && amPmPicker != null) {
             for (WheelPicker wheelPicker : Arrays.asList(daysPicker, minutesPicker, hoursPicker, amPmPicker)) {
                 wheelPicker.setItemTextColor(textColor);
@@ -210,9 +261,9 @@ public class SingleDateAndTimePicker extends LinearLayout {
             }
         }
 
-        if (amPmPicker != null) {
-            amPmPicker.setVisibility(isAmPm ? VISIBLE : GONE);
-        }
+        /*if (amPmPicker != null) {
+            //amPmPicker.setVisibility(isAmPm ? VISIBLE : GONE);
+        }*/
         if (hoursPicker != null) {
             hoursPicker.setIsAmPm(isAmPm);
         }
