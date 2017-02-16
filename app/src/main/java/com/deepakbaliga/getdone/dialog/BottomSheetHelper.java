@@ -75,6 +75,8 @@ public class BottomSheetHelper {
                     if (listener != null) {
                         listener.onLoaded(view);
                     }
+
+
                 }
             }
         }, 100);

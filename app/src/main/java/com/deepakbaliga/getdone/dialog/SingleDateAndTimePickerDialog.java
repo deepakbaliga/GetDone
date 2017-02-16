@@ -5,6 +5,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
@@ -36,6 +37,7 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
         this.bottomSheetHelper.setListener(new BottomSheetHelper.Listener() {
             @Override
             public void onOpen() {
+
             }
 
             @Override
@@ -54,7 +56,7 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
     private void init(View view) {
         picker = (SingleDateAndTimePicker) view.findViewById(R.id.picker);
 
-        final TextView buttonOk = (TextView) view.findViewById(R.id.buttonOk);
+        final ImageButton buttonOk = (ImageButton) view.findViewById(R.id.buttonOk);
         if (buttonOk != null) {
             buttonOk.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -64,9 +66,7 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
                 }
             });
 
-            if (mainColor != null) {
-                buttonOk.setTextColor(mainColor);
-            }
+
         }
 
         final View sheetContentLayout = view.findViewById(R.id.sheetContentLayout);

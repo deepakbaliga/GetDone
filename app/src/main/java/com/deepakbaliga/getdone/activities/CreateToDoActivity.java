@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.deepakbaliga.getdone.R;
+import com.deepakbaliga.getdone.SingleDateAndTimePicker;
 import com.deepakbaliga.getdone.adapters.CategoriesAddTaskAdapter;
 import com.deepakbaliga.getdone.baseClasses.GetDoneActivity;
 import com.deepakbaliga.getdone.callback.ItemCallBack;
@@ -59,6 +60,10 @@ public class CreateToDoActivity extends GetDoneActivity {
 
 
 
+
+
+    private SingleDateAndTimePickerDialog.Builder dateTimePicker;
+
     private LinkedList<Category> categories = new LinkedList<>();
 
     private CategoriesAddTaskAdapter categoriesAdapter;
@@ -85,17 +90,17 @@ public class CreateToDoActivity extends GetDoneActivity {
             public void onClick(View view) {
 
 
-                new SingleDateAndTimePickerDialog.Builder(CreateToDoActivity.this)
+                 dateTimePicker = new SingleDateAndTimePickerDialog.Builder(CreateToDoActivity.this)
                         .bottomSheet()
                         .curved()
-                        //.minutesStep(15)
-                        .title("Pick")
                         .listener(new SingleDateAndTimePickerDialog.Listener() {
                             @Override
                             public void onDateSelected(Date date) {
 
                             }
-                        }).display();
+                        });
+
+                dateTimePicker.display();
             }
         });
 
@@ -143,9 +148,12 @@ public class CreateToDoActivity extends GetDoneActivity {
 
     @Override
     public void onBackPressed() {
+
         super.onBackPressed();
         addTaskButton.setText("");
         addTaskButton.setBackground(getDrawable(R.drawable.ripple_rectangle_corners));
+
+
     }
 
 

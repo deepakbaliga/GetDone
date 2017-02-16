@@ -67,8 +67,6 @@ public class ProjectsFragment extends Fragment {
         categoryRecyclerView.setLayoutManager(gridLayoutManager);
         categoryRecyclerView.setAdapter(categoriesAdapter);
 
-
-
         return view;
     }
 

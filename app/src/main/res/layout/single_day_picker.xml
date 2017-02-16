@@ -31,6 +31,7 @@
             android:layout_marginRight="30dp"
             app:wheel_atmospheric="true"
             app:wheel_item_align="center"
+            
             />
 
         <com.deepakbaliga.getdone.widget.WheelMinutePicker
@@ -39,6 +40,7 @@
             android:layout_height="match_parent"
             app:wheel_atmospheric="true"
             app:wheel_item_align="center"
+
             />
 
         <com.deepakbaliga.getdone.widget.WheelAmPmPicker
@@ -50,6 +52,7 @@
             app:wheel_visible_item_count="2"
             android:paddingLeft="30dp"
             android:layout_marginRight="15dp"
+
             />
 
     </LinearLayout>
@@ -57,9 +60,9 @@
     <View
         android:id="@+id/dtSelector"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="46dp"
         android:layout_gravity="center_vertical"
-        android:alpha="0.2"
+        android:alpha="0.1"
         android:background="@color/picker_default_selector_color"/>
 
 </FrameLayout>

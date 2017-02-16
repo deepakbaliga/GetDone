@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@android:color/white"
+        android:background="@drawable/gradient_picker"
         android:elevation="4dp"
         android:orientation="vertical"
         >
@@ -21,20 +21,21 @@
             android:layout_height="50dp"
             >
 
-            <TextView
+
+
+            <ImageButton
                 android:id="@+id/buttonOk"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="right|center_vertical"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:background="@drawable/ripple_fab"
+                android:elevation="1dp"
                 android:gravity="center"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:paddingLeft="20dp"
-                android:paddingRight="25dp"
-                android:text="@android:string/ok"
-                android:textAllCaps="true"
-                android:textColor="@color/picker_button_background_selected"
-                android:textStyle="bold"
-                />
+                android:layout_marginRight="14dp"
+                android:layout_gravity="right|center_vertical"
+                android:tint="#fff"
+                android:layout_marginLeft="14dp"
+                android:transitionName="add_button"
+                android:src="@drawable/ic_check_white_24dp"/>
 
         </FrameLayout>
 
@@ -44,10 +45,12 @@
             android:layout_height="230dp"
             android:layout_weight="1"
             app:picker_curved="true"
-            app:picker_cyclic="true"
+            app:picker_cyclic="false"
             app:picker_selectedTextColor="@color/picker_button_background_selected"
-            app:picker_textSize="20sp"
-            app:picker_visibleItemCount="7"
+            app:picker_textSize="24sp"
+            app:picker_visibleItemCount="5"
+            app:picker_mustBeOnFuture="true"
+            app:picker_selectorColor="@color/colorAccent"
             />
 
     </LinearLayout>

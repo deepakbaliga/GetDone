@@ -3,6 +3,7 @@ package com.deepakbaliga.getdone;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -199,7 +200,7 @@ public class SingleDateAndTimePicker extends LinearLayout {
         if (daysPicker != null && minutesPicker != null && hoursPicker != null && amPmPicker != null) {
             for (WheelPicker wheelPicker : Arrays.asList(daysPicker, minutesPicker, hoursPicker, amPmPicker)) {
                 wheelPicker.setItemTextColor(textColor);
-                wheelPicker.setSelectedItemTextColor(selectedTextColor);
+                wheelPicker.setSelectedItemTextColor(Color.parseColor("#ffffff"));
                 wheelPicker.setItemTextSize(textSize);
                 wheelPicker.setVisibleItemCount(visibleItemCount);
                 wheelPicker.setCurved(isCurved);
