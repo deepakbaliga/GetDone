@@ -47,11 +47,30 @@
     </RelativeLayout>
 
 
+    <com.deepakbaliga.getdone.customViews.RegularButton
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/button_add_task"
+        android:text="ADD TASK"
+        android:textColor="#fff"
+
+        android:background="@drawable/ripple_rectangle"
+        android:transitionName="add_button"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_above="@+id/button_add_task"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentStart="true">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/toolbar">
+        android:orientation="vertical">
 
         <com.deepakbaliga.getdone.customViews.ThinEditTextView
             android:id="@+id/todo_edit_text"
@@ -66,6 +85,32 @@
             android:inputType="textMultiLine|textCapSentences"
             android:layout_marginLeft="10dp"
             android:gravity="top" />
+
+
+        <com.deepakbaliga.getdone.customViews.ThinTextView
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="8dp"
+            android:textColor="@color/grey"
+            android:layout_marginTop="8dp"
+            android:id="@+id/day_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:textSize="30dp"
+            android:text=""/>
+
+        <com.deepakbaliga.getdone.customViews.RegularTextView
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/grey"
+            android:id="@+id/time_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:textSize="18dp"
+
+            android:text=""/>
 
         <View
             android:id="@+id/line_one"
@@ -110,19 +155,21 @@
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"/>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/images_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_margin="8dp"
+            android:clipToPadding="false"/>
+
+
+
+
     </LinearLayout>
 
-
-    <com.deepakbaliga.getdone.customViews.RegularButton
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/button_add_task"
-        android:text="ADD TASK"
-        android:textColor="#fff"
-        android:background="@drawable/ripple_rectangle"
-        android:transitionName="add_button"/>
+    </ScrollView>
 
 
 </RelativeLayout>

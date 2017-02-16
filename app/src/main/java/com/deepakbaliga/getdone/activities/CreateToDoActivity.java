@@ -1,10 +1,14 @@
 package com.deepakbaliga.getdone.activities;
 
 
+import android.Manifest;
 import android.app.SharedElementCallback;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,16 +23,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.deepakbaliga.getdone.R;
 import com.deepakbaliga.getdone.SingleDateAndTimePicker;
 import com.deepakbaliga.getdone.adapters.CategoriesAddTaskAdapter;
+import com.deepakbaliga.getdone.adapters.PictureTileAdapter;
 import com.deepakbaliga.getdone.baseClasses.GetDoneActivity;
 import com.deepakbaliga.getdone.callback.ItemCallBack;
+import com.deepakbaliga.getdone.customViews.BoldTextView;
 import com.deepakbaliga.getdone.customViews.RegularButton;
+import com.deepakbaliga.getdone.customViews.RegularTextView;
+import com.deepakbaliga.getdone.customViews.ThinTextView;
+import com.deepakbaliga.getdone.dialog.CommentsFragment;
 import com.deepakbaliga.getdone.dialog.SingleDateAndTimePickerDialog;
 import com.deepakbaliga.getdone.model.Category;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,8 +50,9 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import gun0912.tedbottompicker.TedBottomPicker;
 
-public class CreateToDoActivity extends GetDoneActivity {
+public class CreateToDoActivity extends FragmentActivity {
 
 
     @BindView(R.id.todo_edit_text)
@@ -51,6 +66,9 @@ public class CreateToDoActivity extends GetDoneActivity {
 
     @BindView(R.id.categories_recyclerview)
     RecyclerView categoriesRecyclerView;
+
+    @BindView(R.id.images_recyclerview)
+    RecyclerView tilesRecyclerView;
 
     @BindView(R.id.button_date_and_time)
     ImageView dateAndTimeButton;
@@ -80,21 +98,38 @@ public class CreateToDoActivity extends GetDoneActivity {
     @BindView(R.id.line_three)
     View lineThree;
 
+    @BindView(R.id.day_textview)
+    ThinTextView dayTextView;
+
+    @BindView(R.id.time_textview)
+    RegularTextView timeTextView;
 
 
+
+    private boolean setReminder = false;
+    private boolean setDate     = false;
 
     private SingleDateAndTimePickerDialog.Builder dateTimePicker;
 
     private LinkedList<Category> categories = new LinkedList<>();
-
     private CategoriesAddTaskAdapter categoriesAdapter;
-    private LinearLayoutManager linearLayoutManager;
+
+    private ArrayList<Uri> fileUriList = new ArrayList<>();
+    private PictureTileAdapter pictureTileAdapter;
+
+    private LinearLayoutManager linearLayoutManagerCategories, linearLayoutManagerTiles;
+
+
+    private static final String ACTION_QUICKSTART = "com.deepakbaliga.getdone.QUICKSTART";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_to_do);
         ButterKnife.bind(this);
+
+
 
 
 
@@ -113,11 +148,11 @@ public class CreateToDoActivity extends GetDoneActivity {
         //Animate TodoEditText First
         todoEditText.setAnimation(dropFromTopAnimation);
         categoriesRecyclerView.setAnimation(dropFromTopAnimationLate);
+
         toolsLayout.setAnimation(dropFromTopAnimationLate);
         lineOne.setAnimation(fadeIn);
         lineTwo.setAnimation(fadeIn);
         lineThree.setAnimation(fadeIn);
-
 
     }
 
@@ -126,9 +161,6 @@ public class CreateToDoActivity extends GetDoneActivity {
         dateAndTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-
                  dateTimePicker = new SingleDateAndTimePickerDialog.Builder(CreateToDoActivity.this)
                         .bottomSheet()
                         .curved()
@@ -136,19 +168,145 @@ public class CreateToDoActivity extends GetDoneActivity {
                             @Override
                             public void onDateSelected(Date date, boolean isThereTime) {
 
+                                setDate = true;
+
+                                dateAndTimeButton.setColorFilter(getResources().getColor(R.color.colorPrimary));
+                                final Animation vibrateAnimation = AnimationUtils.loadAnimation(CreateToDoActivity.this, R.anim.vibrate);
+                                dateAndTimeButton.startAnimation(vibrateAnimation);
+
+                                final Animation riseFromBottom = AnimationUtils.loadAnimation(CreateToDoActivity.this, R.anim.rise_from_bottom_little_later);
+
+
+                                String pattern = "dd MMMM";
+                                SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+                                dayTextView.setVisibility(View.VISIBLE);
+                                dayTextView.setText(dateFormat.format(date));
+                                dayTextView.setAnimation(riseFromBottom);
+
+
+                                //TimeFormat
+                                dateFormat = new SimpleDateFormat("hh:mm a");
+
+
+
                                 if (isThereTime){
 
+                                timeTextView.setText(dateFormat.format(date));
+                                timeTextView.setVisibility(View.VISIBLE);
+                                timeTextView.setAnimation(riseFromBottom);
 
                                 }else{
-
+                                    timeTextView.setText("");
+                                    timeTextView.setVisibility(View.INVISIBLE);
 
                                 }
-
 
                             }
                         });
 
                 dateTimePicker.display();
+            }
+        });
+
+
+        reminderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                setReminder = !setReminder;
+
+                if(setReminder){
+
+                    reminderButton.setColorFilter(getResources().getColor(R.color.colorPrimary));
+                    final Animation vibrateAnimation = AnimationUtils.loadAnimation(CreateToDoActivity.this, R.anim.vibrate);
+                    reminderButton.startAnimation(vibrateAnimation);
+
+                }else{
+                    reminderButton.setColorFilter(getResources().getColor(R.color.light_grey));
+
+                }
+            }
+        });
+
+        attachmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+                PermissionListener permissionlistener = new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted() {
+
+                        TedBottomPicker bottomSheetDialogFragment = new TedBottomPicker.Builder(CreateToDoActivity.this)
+                                .setOnMultiImageSelectedListener(new TedBottomPicker.OnMultiImageSelectedListener() {
+                                    @Override
+                                    public void onImagesSelected(ArrayList<Uri> uriList) {
+
+                                        fileUriList  = uriList;
+
+
+                                        if(fileUriList.size()>0){
+
+                                            attachmentButton.setColorFilter(getResources().getColor(R.color.colorPrimary));
+                                            final Animation vibrateAnimation = AnimationUtils.loadAnimation(CreateToDoActivity.this, R.anim.vibrate);
+                                            attachmentButton.startAnimation(vibrateAnimation);
+
+                                            pictureTileAdapter.setUriList(uriList);
+                                            pictureTileAdapter.notifyDataSetChanged();
+
+                                        }else{
+                                            attachmentButton.setColorFilter(getResources().getColor(R.color.light_grey));
+
+                                        }
+
+
+
+                                    }
+                                })
+                                .setPeekHeight(1600)
+                                .showTitle(true)
+                                .setTitle("")
+                                .setCompleteButtonText("Done")
+                                .setEmptySelectionText("Select Pictures ( Max Limit 10 )")
+                                .setSelectMaxCount(10)
+                                .setSelectMaxCountErrorText("Maximum Limit of 10 Reached.")
+                                .create();
+
+                        bottomSheetDialogFragment.show(getSupportFragmentManager());
+
+                    }
+
+                    @Override
+                    public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                        Toast.makeText(CreateToDoActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+
+                };
+
+                new TedPermission(CreateToDoActivity.this)
+                        .setPermissionListener(permissionlistener)
+                        .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                        .check();
+
+
+
+
+
+
+
+
+            }
+        });
+
+
+        commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                
             }
         });
 
@@ -175,11 +333,29 @@ public class CreateToDoActivity extends GetDoneActivity {
             }
         });
 
+        pictureTileAdapter = new PictureTileAdapter(this, new ArrayList<Uri>(), new ItemCallBack() {
+            @Override
+            public void onSelect(int position) {
 
-        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+                fileUriList.remove(position);
+                pictureTileAdapter.notifyDataSetChanged();
 
-        categoriesRecyclerView.setLayoutManager(linearLayoutManager);
+                if(fileUriList.size()<=0){
+                    attachmentButton.setColorFilter(getResources().getColor(R.color.light_grey));
+                }
+
+            }
+        });
+
+        linearLayoutManagerCategories = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        linearLayoutManagerTiles = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
+        categoriesRecyclerView.setLayoutManager(linearLayoutManagerCategories);
         categoriesRecyclerView.setAdapter(categoriesAdapter);
+
+        tilesRecyclerView.setLayoutManager(linearLayoutManagerTiles);
+
+        tilesRecyclerView.setAdapter(pictureTileAdapter);
 
 
 

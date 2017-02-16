@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.deepakbaliga.getdone.customViews.SquareImageView
+        android:id="@+id/image_tile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        android:padding="4dp" />
+
+    <ImageButton
+        android:id="@+id/tile_delete"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="top|right"
+        android:background="@drawable/ripple_fab"
+        android:elevation="1dp"
+        android:tint="#fff"
+        android:src="@drawable/ic_close"/>
+</FrameLayout>
