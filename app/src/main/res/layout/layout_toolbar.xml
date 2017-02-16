@@ -6,6 +6,7 @@
     android:layout_margin="14dp">
 
     <ImageView
+        android:id="@+id/button_date_and_time"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:tint="@color/light_grey"
@@ -17,6 +18,7 @@
         android:background="@drawable/ripple_rectangle_transperant"/>
 
     <ImageView
+        android:id="@+id/button_reminder"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:tint="@color/light_grey"
@@ -26,7 +28,10 @@
         android:foreground="?android:selectableItemBackground"
         android:background="@drawable/ripple_rectangle_transperant"
         android:src="@drawable/tool_icon_reminder"/>
+
+
     <ImageView
+        android:id="@+id/button_comment"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:tint="@color/light_grey"
@@ -37,6 +42,7 @@
         android:background="@drawable/ripple_rectangle_transperant"
         android:src="@drawable/tool_icon_comment"/>
     <ImageView
+        android:id="@+id/button_attachment"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:tint="@color/light_grey"
@@ -47,6 +53,7 @@
         android:background="@drawable/ripple_rectangle_transperant"
         android:src="@drawable/tool_icon_attachment"/>
     <ImageView
+        android:id="@+id/button_voice_note"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:tint="@color/light_grey"

@@ -18,8 +18,10 @@ import com.deepakbaliga.getdone.adapters.CategoriesAddTaskAdapter;
 import com.deepakbaliga.getdone.baseClasses.GetDoneActivity;
 import com.deepakbaliga.getdone.callback.ItemCallBack;
 import com.deepakbaliga.getdone.customViews.RegularButton;
+import com.deepakbaliga.getdone.dialog.SingleDateAndTimePickerDialog;
 import com.deepakbaliga.getdone.model.Category;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +41,22 @@ public class CreateToDoActivity extends GetDoneActivity {
     @BindView(R.id.categories_recyclerview)
     RecyclerView categoriesRecyclerView;
 
+    @BindView(R.id.button_date_and_time)
+    ImageView dateAndTimeButton;
+
+
+    @BindView(R.id.button_reminder)
+    ImageView reminderButton;
+
+    @BindView(R.id.button_comment)
+    ImageView commentButton;
+
+    @BindView(R.id.button_attachment)
+    ImageView attachmentButton;
+
+    @BindView(R.id.button_voice_note)
+    ImageView voiceNoteButton;
+
 
 
     private LinkedList<Category> categories = new LinkedList<>();
@@ -55,6 +73,31 @@ public class CreateToDoActivity extends GetDoneActivity {
 
 
         init();
+
+        initToolBar();
+
+    }
+
+    private void initToolBar() {
+
+        dateAndTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                new SingleDateAndTimePickerDialog.Builder(CreateToDoActivity.this)
+                        .bottomSheet()
+                        .curved()
+                        //.minutesStep(15)
+                        .title("Pick")
+                        .listener(new SingleDateAndTimePickerDialog.Listener() {
+                            @Override
+                            public void onDateSelected(Date date) {
+
+                            }
+                        }).display();
+            }
+        });
 
     }
 
