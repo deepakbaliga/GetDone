@@ -6,7 +6,9 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
 import com.deepakbaliga.getdone.widget.WheelAmPmPicker;
@@ -432,4 +434,6 @@ public class SingleDateAndTimePicker extends LinearLayout {
     public interface Listener {
         void onDateChanged(String displayed, Date date);
     }
+
+
 }

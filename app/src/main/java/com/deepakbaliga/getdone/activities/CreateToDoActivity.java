@@ -2,18 +2,16 @@ package com.deepakbaliga.getdone.activities;
 
 
 import android.Manifest;
-import android.app.SharedElementCallback;
-import android.graphics.Color;
+
 import android.net.Uri;
 import android.os.Bundle;
 
-import android.os.Handler;
+
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.Transition;
+
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -23,8 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import com.deepakbaliga.getdone.R;
 import com.deepakbaliga.getdone.SingleDateAndTimePicker;
 import com.deepakbaliga.getdone.adapters.CategoriesAddTaskAdapter;
@@ -35,8 +32,8 @@ import com.deepakbaliga.getdone.customViews.BoldTextView;
 import com.deepakbaliga.getdone.customViews.RegularButton;
 import com.deepakbaliga.getdone.customViews.RegularTextView;
 import com.deepakbaliga.getdone.customViews.ThinTextView;
-import com.deepakbaliga.getdone.dialog.CommentsFragment;
 import com.deepakbaliga.getdone.dialog.SingleDateAndTimePickerDialog;
+import com.deepakbaliga.getdone.fragments.SubTasksFragment;
 import com.deepakbaliga.getdone.model.Category;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -106,6 +103,8 @@ public class CreateToDoActivity extends FragmentActivity {
 
 
 
+
+
     private boolean setReminder = false;
     private boolean setDate     = false;
 
@@ -120,7 +119,10 @@ public class CreateToDoActivity extends FragmentActivity {
     private LinearLayoutManager linearLayoutManagerCategories, linearLayoutManagerTiles;
 
 
-    private static final String ACTION_QUICKSTART = "com.deepakbaliga.getdone.QUICKSTART";
+
+
+
+
 
 
     @Override
@@ -306,7 +308,12 @@ public class CreateToDoActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
 
-                
+
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack("idontcare")
+                        .add(R.id.activity_create_to_do, SubTasksFragment.getInstance(), "createSubTask").commit();
+
             }
         });
 
@@ -354,14 +361,15 @@ public class CreateToDoActivity extends FragmentActivity {
         categoriesRecyclerView.setAdapter(categoriesAdapter);
 
         tilesRecyclerView.setLayoutManager(linearLayoutManagerTiles);
-
         tilesRecyclerView.setAdapter(pictureTileAdapter);
 
 
 
         closeButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+
                 finish();
                 CreateToDoActivity.this.overridePendingTransition(R.anim.fade_in, R.anim.close);
             }
@@ -373,13 +381,13 @@ public class CreateToDoActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
 
-        Log.e("BACK", "Button Press");
-
         if(dateTimePicker!=null){
             if(!dateTimePicker.isClosed()){
+
                 super.onBackPressed();
                 addTaskButton.setText("");
                 addTaskButton.setBackground(getDrawable(R.drawable.ripple_rectangle_corners));
+
             }else{
                 dateTimePicker.close();
             }
@@ -388,16 +396,9 @@ public class CreateToDoActivity extends FragmentActivity {
             super.onBackPressed();
             addTaskButton.setText("");
             addTaskButton.setBackground(getDrawable(R.drawable.ripple_rectangle_corners));
+
         }
-
-
-
-
-
-
-
     }
-
 
 
 }

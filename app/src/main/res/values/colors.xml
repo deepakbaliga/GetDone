@@ -3,6 +3,7 @@
     <color name="colorPrimary">#BEAAF1</color>
     <color name="colorPrimaryDark">#615EA2</color>
     <color name="colorAccent">#51EDD3</color>
+    <color name="colorAccentAlpha">#4f51edd3</color>
     
     <color name="tuquoise">#1abc9c</color>
     <color name="emerald">#2ecc71</color>
