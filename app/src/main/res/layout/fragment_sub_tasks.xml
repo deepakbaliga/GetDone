@@ -58,7 +58,7 @@
             android:layout_margin="12dp"
             android:id="@+id/sub_task_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             xmlns:tools="http://schemas.android.com/tools"
             tools:listitem="@layout/item_sub_task"/>
 

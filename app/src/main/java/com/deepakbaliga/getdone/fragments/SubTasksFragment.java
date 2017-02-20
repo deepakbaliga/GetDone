@@ -60,7 +60,7 @@ public class SubTasksFragment extends Fragment {
 
 
     public SubTasksFragment() {
-        
+
     }
 
     public static SubTasksFragment getInstance(LinkedList<SubTask> subTasksList, CallBackSubTasks backSubTasks){

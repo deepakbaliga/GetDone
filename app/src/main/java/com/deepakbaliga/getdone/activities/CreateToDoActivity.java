@@ -38,6 +38,7 @@ import com.deepakbaliga.getdone.dialog.SingleDateAndTimePickerDialog;
 import com.deepakbaliga.getdone.fragments.SubTasksFragment;
 import com.deepakbaliga.getdone.model.Category;
 import com.deepakbaliga.getdone.model.SubTask;
+import com.deepakbaliga.getdone.utilities.Pop;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -140,6 +141,7 @@ public class CreateToDoActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_to_do);
         ButterKnife.bind(this);
+
 
 
 
@@ -330,6 +332,7 @@ public class CreateToDoActivity extends FragmentActivity {
                             @Override
                             public void onResult(LinkedList<SubTask> subTaskList) {
                                 subTasks = subTaskList;
+
 
                                 if(subTasks.size()>0){
                                     commentButton.setColorFilter(getResources().getColor(R.color.colorPrimary));

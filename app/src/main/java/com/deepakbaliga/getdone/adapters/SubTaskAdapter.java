@@ -8,6 +8,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.deepakbaliga.getdone.R;
@@ -33,6 +35,7 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
     private LinkedList<SubTask> subTasks = new LinkedList<>();
     private ItemCallBack callBack;
 
+    private int lastPosition = -1;
     public SubTaskAdapter(Context context, LinkedList<SubTask> subTasks, ItemCallBack callBack) {
         this.context = context;
         this.subTasks = subTasks;
@@ -53,6 +56,8 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
         SubTask subTask = subTasks.get(position);
         holder.task.setText(subTask.getSubTask());
 
+        setAnimation(holder.itemView, position);
+
     }
 
     @Override
@@ -67,6 +72,18 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
 
         subTasks.remove(position);
         notifyItemRemoved(position);
+        lastPosition--;
+    }
+
+    private void setAnimation(View viewToAnimate, int position)
+    {
+
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
 
