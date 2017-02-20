@@ -1,6 +1,8 @@
 package com.deepakbaliga.getdone.fragments;
 
 
+import android.app.FragmentManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,12 +13,15 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.deepakbaliga.getdone.R;
 import com.deepakbaliga.getdone.activities.CreateToDoActivity;
 import com.deepakbaliga.getdone.adapters.SubTaskAdapter;
+import com.deepakbaliga.getdone.callback.CallBackSubTasks;
+import com.deepakbaliga.getdone.callback.ItemCallBack;
 import com.deepakbaliga.getdone.callback.SimpleItemTouchHelperCallback;
 import com.deepakbaliga.getdone.customViews.ThinEditTextView;
 import com.deepakbaliga.getdone.model.SubTask;
@@ -25,6 +30,7 @@ import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.internal.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,18 +48,26 @@ public class SubTasksFragment extends Fragment {
      ImageButton addTaskButton;
 
     private LinearLayoutManager linearLayoutManager;
-    private LinkedList<SubTask> subTasks = new LinkedList<>();
+    private static LinkedList<SubTask> subTasks = new LinkedList<>();
     private SubTaskAdapter subTaskAdapter;
 
     private ItemTouchHelper mItemTouchHelper;
 
+    private static CallBackSubTasks callBackSubTasks;
+
+
+
 
 
     public SubTasksFragment() {
-        // Required empty public constructor
+        
     }
 
-    public static SubTasksFragment getInstance(){
+    public static SubTasksFragment getInstance(LinkedList<SubTask> subTasksList, CallBackSubTasks backSubTasks){
+
+
+        subTasks = subTasksList;
+        callBackSubTasks = backSubTasks;
 
         SubTasksFragment subTasksFragment = new SubTasksFragment();
         return  subTasksFragment;
@@ -70,11 +84,23 @@ public class SubTasksFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         subTasksRecyclerView.setLayoutManager(linearLayoutManager);
 
-        loadData();
+
+            subTaskEditText.post(new Runnable() {
+                @Override
+                public void run() {
+                    subTaskEditText.requestFocus();
+                    InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imgr.showSoftInput(subTaskEditText, InputMethodManager.SHOW_IMPLICIT);
+                }
+            });
 
 
-
-        subTaskAdapter = new SubTaskAdapter(getActivity(), subTasks);
+        subTaskAdapter = new SubTaskAdapter(getActivity(), subTasks, new ItemCallBack() {
+            @Override
+            public void onSelect(int position) {
+                subTasks.remove(position);
+            }
+        });
         subTasksRecyclerView.setAdapter(subTaskAdapter);
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(subTaskAdapter);
@@ -96,25 +122,15 @@ public class SubTasksFragment extends Fragment {
             }
         });
 
-
-
-
-
-
-
         return view;
     }
 
-    private void loadData() {
 
-        subTasks.add(new SubTask(1,"Take Lucy for a walk"));
-        subTasks.add(new SubTask(1,"Throw the dustbin items"));
-        subTasks.add(new SubTask(1,"Get clothes from laundry"));
-        subTasks.add(new SubTask(1,"Buy gifts for John"));
-        subTasks.add(new SubTask(1,"Order Cake for John's Birthday"));
 
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        callBackSubTasks.onResult(subTasks);
     }
-
-
-
 }

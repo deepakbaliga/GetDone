@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import android.support.v4.app.FragmentActivity;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -27,6 +28,7 @@ import com.deepakbaliga.getdone.SingleDateAndTimePicker;
 import com.deepakbaliga.getdone.adapters.CategoriesAddTaskAdapter;
 import com.deepakbaliga.getdone.adapters.PictureTileAdapter;
 import com.deepakbaliga.getdone.baseClasses.GetDoneActivity;
+import com.deepakbaliga.getdone.callback.CallBackSubTasks;
 import com.deepakbaliga.getdone.callback.ItemCallBack;
 import com.deepakbaliga.getdone.customViews.BoldTextView;
 import com.deepakbaliga.getdone.customViews.RegularButton;
@@ -35,6 +37,7 @@ import com.deepakbaliga.getdone.customViews.ThinTextView;
 import com.deepakbaliga.getdone.dialog.SingleDateAndTimePickerDialog;
 import com.deepakbaliga.getdone.fragments.SubTasksFragment;
 import com.deepakbaliga.getdone.model.Category;
+import com.deepakbaliga.getdone.model.SubTask;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -111,12 +114,19 @@ public class CreateToDoActivity extends FragmentActivity {
     private SingleDateAndTimePickerDialog.Builder dateTimePicker;
 
     private LinkedList<Category> categories = new LinkedList<>();
+    private ArrayList<Uri> fileUriList = new ArrayList<>();
+    private LinkedList<SubTask> subTasks = new LinkedList<>();
+
     private CategoriesAddTaskAdapter categoriesAdapter;
 
-    private ArrayList<Uri> fileUriList = new ArrayList<>();
+
     private PictureTileAdapter pictureTileAdapter;
 
     private LinearLayoutManager linearLayoutManagerCategories, linearLayoutManagerTiles;
+
+
+    private boolean isOpenSubTask = false;
+    FragmentTransaction transaction;
 
 
 
@@ -308,11 +318,32 @@ public class CreateToDoActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
 
+                isOpenSubTask = true;
 
-                getSupportFragmentManager()
+
+
+                 transaction = getSupportFragmentManager()
                         .beginTransaction()
                         .addToBackStack("idontcare")
-                        .add(R.id.activity_create_to_do, SubTasksFragment.getInstance(), "createSubTask").commit();
+                         .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                        .add(R.id.activity_create_to_do, SubTasksFragment.getInstance(subTasks, new CallBackSubTasks() {
+                            @Override
+                            public void onResult(LinkedList<SubTask> subTaskList) {
+                                subTasks = subTaskList;
+
+                                if(subTasks.size()>0){
+                                    commentButton.setColorFilter(getResources().getColor(R.color.colorPrimary));
+                                    final Animation vibrateAnimation = AnimationUtils.loadAnimation(CreateToDoActivity.this, R.anim.vibrate);
+                                    commentButton.startAnimation(vibrateAnimation);
+                                }else{
+                                    commentButton.setColorFilter(getResources().getColor(R.color.light_grey));
+                                }
+
+                            }
+                        }), "createSubTask");
+
+                transaction.commit();
+
 
             }
         });
@@ -380,6 +411,14 @@ public class CreateToDoActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
+
+        if(isOpenSubTask){
+
+            getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).
+                    remove(getSupportFragmentManager().findFragmentById(R.id.activity_create_to_do)).commit();
+            isOpenSubTask = false;
+            return;
+        }
 
         if(dateTimePicker!=null){
             if(!dateTimePicker.isClosed()){

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.deepakbaliga.getdone.R;
+import com.deepakbaliga.getdone.callback.ItemCallBack;
 import com.deepakbaliga.getdone.callback.ItemTouchHelperAdapter;
 import com.deepakbaliga.getdone.callback.ItemTouchHelperViewHolder;
 import com.deepakbaliga.getdone.customViews.ThinTextView;
@@ -30,10 +31,12 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
 
     private Context context;
     private LinkedList<SubTask> subTasks = new LinkedList<>();
+    private ItemCallBack callBack;
 
-    public SubTaskAdapter(Context context, LinkedList<SubTask> subTasks) {
+    public SubTaskAdapter(Context context, LinkedList<SubTask> subTasks, ItemCallBack callBack) {
         this.context = context;
         this.subTasks = subTasks;
+        this.callBack = callBack;
     }
 
     @Override
@@ -57,13 +60,7 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
         return subTasks.size();
     }
 
-    @Override
-    public void onItemMove(int fromPosition, int toPosition) {
 
-        SubTask prev = subTasks.remove(fromPosition);
-        subTasks.add(toPosition > fromPosition ? toPosition - 1 : toPosition, prev);
-        notifyItemMoved(fromPosition, toPosition);
-    }
 
     @Override
     public void onItemDismiss(int position) {
