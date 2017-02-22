@@ -2,11 +2,13 @@ package com.deepakbaliga.getdone.model;
 
 import java.io.Serializable;
 
+import io.realm.RealmObject;
+
 /**
  * Created by deepakbaliga on 14/02/17.
  */
 
-public class Category implements Serializable {
+public class Category extends RealmObject {
 
     private long id;
     private String categoryTitle;
@@ -67,5 +69,21 @@ public class Category implements Serializable {
 
     public void setDeletable(boolean deletable) {
         this.deletable = deletable;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getTotalTasks() {
+        return totalTasks;
+    }
+
+    public void setTotalTasks(int totalTasks) {
+        this.totalTasks = totalTasks;
     }
 }

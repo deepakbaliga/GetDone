@@ -1,15 +1,18 @@
 package com.deepakbaliga.getdone.model;
 
+import io.realm.RealmObject;
+
 /**
  * Created by deepakbaliga on 20/02/17.
  */
 
-public class SubTask {
+public class SubTask  extends RealmObject {
 
     private long id;
     private String subTask;
 
-
+    public SubTask() {
+    }
 
     public SubTask(long id, String subTask) {
         this.id = id;

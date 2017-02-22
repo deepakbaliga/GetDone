@@ -26,20 +26,19 @@ import android.widget.Toast;
 
 
 import com.deepakbaliga.getdone.R;
-import com.deepakbaliga.getdone.SingleDateAndTimePicker;
 import com.deepakbaliga.getdone.adapters.CategoriesAddTaskAdapter;
 import com.deepakbaliga.getdone.adapters.PictureTileAdapter;
-import com.deepakbaliga.getdone.baseClasses.GetDoneActivity;
 import com.deepakbaliga.getdone.callback.CallBackSubTasks;
 import com.deepakbaliga.getdone.callback.ItemCallBack;
-import com.deepakbaliga.getdone.customViews.BoldTextView;
 import com.deepakbaliga.getdone.customViews.RegularButton;
 import com.deepakbaliga.getdone.customViews.RegularTextView;
 import com.deepakbaliga.getdone.customViews.ThinTextView;
 import com.deepakbaliga.getdone.dialog.SingleDateAndTimePickerDialog;
 import com.deepakbaliga.getdone.fragments.SubTasksFragment;
 import com.deepakbaliga.getdone.model.Category;
+import com.deepakbaliga.getdone.model.RealmUri;
 import com.deepakbaliga.getdone.model.SubTask;
+import com.deepakbaliga.getdone.model.Task;
 import com.deepakbaliga.getdone.utilities.Pop;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -48,8 +47,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,6 +55,8 @@ import cafe.adriel.androidaudiorecorder.model.AudioChannel;
 import cafe.adriel.androidaudiorecorder.model.AudioSampleRate;
 import cafe.adriel.androidaudiorecorder.model.AudioSource;
 import gun0912.tedbottompicker.TedBottomPicker;
+import io.realm.Realm;
+import io.realm.RealmList;
 
 public class CreateToDoActivity extends FragmentActivity {
 
@@ -121,9 +120,13 @@ public class CreateToDoActivity extends FragmentActivity {
 
     private boolean setReminder = false;
     private boolean setDate     = false;
+    private boolean setTime     = false;
+
+    private Date dateSelected;
 
     private SingleDateAndTimePickerDialog.Builder dateTimePicker;
 
+    private int categorySelected = 0;
     private LinkedList<Category> categories = new LinkedList<>();
     private ArrayList<Uri> fileUriList = new ArrayList<>();
     private LinkedList<SubTask> subTasks = new LinkedList<>();
@@ -192,7 +195,11 @@ public class CreateToDoActivity extends FragmentActivity {
                             @Override
                             public void onDateSelected(Date date, boolean isThereTime) {
 
+                                setTime = isThereTime;
+
                                 setDate = true;
+
+                                dateSelected = date;
 
                                 dateAndTimeButton.setColorFilter(getResources().getColor(R.color.colorPrimary));
                                 final Animation vibrateAnimation = AnimationUtils.loadAnimation(CreateToDoActivity.this, R.anim.vibrate);
@@ -382,6 +389,8 @@ public class CreateToDoActivity extends FragmentActivity {
 
                 categoriesAdapter.notifyDataSetChanged();
 
+                categorySelected = position;
+
 
             }
         });
@@ -565,6 +574,131 @@ public class CreateToDoActivity extends FragmentActivity {
 
             }
         }
+
+    }
+
+    public void addTask(View view){
+
+
+        if(isValid()){
+
+
+            Realm realm = Realm.getDefaultInstance();
+
+
+
+            realm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm bgRealm) {
+
+
+                    Task task = bgRealm.createObject(Task.class);
+
+
+                    task.setId(0l);
+
+                    task.setTask(todoEditText.getText().toString().trim());
+
+
+
+                    Category category = bgRealm.createObject(Category.class);
+
+                    category.setCategoryTitle(categories.get(categorySelected).getCategoryTitle());
+                    category.setColor(categories.get(categorySelected).getColor());
+                    category.setDeletable(categories.get(categorySelected).isDeletable());
+                    category.setIcon(categories.get(categorySelected).getIcon());
+                    category.setRemainingTasks(categories.get(categorySelected).getRemainingTasks());
+                    category.setTotalTasks(categories.get(categorySelected).getTotalTasks());
+
+                    task.setCategory(category);
+
+
+
+                    task.setTimeSet(setTime);
+                    task.setDate(dateSelected);
+                    task.setReminderSet(setReminder);
+
+
+                    if(subTasks.size()>0){
+                        task.setSubTaskSet(true);
+                    }else{
+                        task.setSubTaskSet(false);
+                    }
+
+                    RealmList<SubTask> realmTasks = new RealmList<>();
+
+                    for(SubTask s : subTasks){
+                        realmTasks.add(s);
+                    }
+
+                    task.setSubTasks(realmTasks);
+
+
+                    if(fileUriList.size()>0){
+                        task.setAttachmentSet(true);
+                    }else{
+                        task.setAttachmentSet(false);
+                    }
+
+                    RealmList<RealmUri> imageURIs = new RealmList<>();
+                    for(Uri uri: fileUriList){
+
+                        imageURIs.add(new RealmUri(uri.getPath(), uri.getEncodedPath()));
+
+                    }
+                    task.setImages(imageURIs);
+
+                    task.setAudioSet(isAudioPresent);
+                    task.setAudioUri(filePath);
+
+                    task.setDateCreated(new Date());
+
+
+
+
+
+
+
+
+                }
+            }, new Realm.Transaction.OnSuccess() {
+                @Override
+                public void onSuccess() {
+
+                    Pop.show(CreateToDoActivity.this, "Cool!");
+                    CreateToDoActivity.this.finish();
+
+                }
+            }, new Realm.Transaction.OnError() {
+                @Override
+                public void onError(Throwable error) {
+                    Pop.show(CreateToDoActivity.this, "Something went wrong !\n"+error.getLocalizedMessage());
+
+
+                }
+            });
+
+
+
+
+        }
+
+    }
+
+    private boolean isValid() {
+
+        if(todoEditText.getText().length()<=0){
+            Pop.show(CreateToDoActivity.this, "Come on dude! Add something in ToDo.");
+            return false;
+        }else if(setReminder==true && setDate==false){
+            Pop.show(CreateToDoActivity.this, "You need to select a date!");
+            return false;
+        }else if(!setDate){
+            Pop.show(CreateToDoActivity.this, "You need to select a date!");
+            return false;
+        }
+
+        return true;
 
     }
 }

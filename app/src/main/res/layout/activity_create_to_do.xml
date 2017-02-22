@@ -54,6 +54,7 @@
         android:id="@+id/button_add_task"
         android:text="ADD TASK"
         android:textColor="#fff"
+        android:onClick="addTask"
         android:background="@drawable/ripple_rectangle"
         android:transitionName="add_button" />
 
