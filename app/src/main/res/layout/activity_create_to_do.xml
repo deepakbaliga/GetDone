@@ -153,6 +153,39 @@
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"/>
 
+        <LinearLayout
+            android:id="@+id/recorded_audio"
+            android:clickable="true"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_rectangle_slight_corners"
+            android:padding="4dp"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_close"
+                android:tint="@android:color/white"
+                android:padding="4dp"
+                android:layout_gravity="center_vertical"
+                />
+
+            <com.deepakbaliga.getdone.customViews.BoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AUDIO"
+                android:textColor="@android:color/white"
+                android:layout_margin="4dp"
+
+                />
+
+        </LinearLayout>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/images_recyclerview"
             android:layout_width="match_parent"
@@ -161,6 +194,8 @@
             android:paddingRight="8dp"
             android:layout_margin="8dp"
             android:clipToPadding="false"/>
+
+
 
 
 

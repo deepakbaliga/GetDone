@@ -3,10 +3,12 @@ package com.deepakbaliga.getdone.activities;
 
 import android.Manifest;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 
+import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 
 import android.support.v4.app.FragmentTransaction;
@@ -51,6 +53,10 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder;
+import cafe.adriel.androidaudiorecorder.model.AudioChannel;
+import cafe.adriel.androidaudiorecorder.model.AudioSampleRate;
+import cafe.adriel.androidaudiorecorder.model.AudioSource;
 import gun0912.tedbottompicker.TedBottomPicker;
 
 public class CreateToDoActivity extends FragmentActivity {
@@ -105,8 +111,12 @@ public class CreateToDoActivity extends FragmentActivity {
     @BindView(R.id.time_textview)
     RegularTextView timeTextView;
 
+    @BindView(R.id.recorded_audio)
+    LinearLayout recordedAudio;
 
 
+    private String filePath;
+    private boolean isAudioPresent = false;
 
 
     private boolean setReminder = false;
@@ -351,6 +361,8 @@ public class CreateToDoActivity extends FragmentActivity {
             }
         });
 
+
+
     }
 
     private void init() {
@@ -409,6 +421,89 @@ public class CreateToDoActivity extends FragmentActivity {
             }
         });
 
+        voiceNoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                PermissionListener permissionlistener = new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted() {
+
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                        String format = simpleDateFormat.format(new Date());
+                        Log.d("MainActivity", "Current Timestamp: " + format);
+
+                         filePath = Environment.getExternalStorageDirectory() + "/"+format+"_recorded_audio.wav";
+                        Log.e("TAG", "onPermissionGranted: "+ filePath);
+                        int color = getResources().getColor(R.color.colorAccent);
+                        int requestCode = 0;
+                        AndroidAudioRecorder.with(CreateToDoActivity.this)
+
+                                .setFilePath(filePath)
+                                .setColor(color)
+                                .setRequestCode(requestCode)
+                                .setSource(AudioSource.MIC)
+                                .setChannel(AudioChannel.STEREO)
+                                .setSampleRate(AudioSampleRate.HZ_48000)
+                                .setAutoStart(false)
+                                .setKeepDisplayOn(true)
+                                .record();
+
+
+                    }
+
+                    @Override
+                    public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                        Pop.show(CreateToDoActivity.this, "Permission Denied\n" + deniedPermissions.toString());
+                    }
+
+
+                };
+
+
+                new TedPermission(CreateToDoActivity.this)
+                        .setPermissionListener(permissionlistener)
+                        .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                        .setPermissions(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .check();
+
+
+            }
+        });
+
+        recordedAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isAudioPresent = false;
+
+
+                Animation animation = AnimationUtils.loadAnimation(CreateToDoActivity.this, android.R.anim.slide_out_right);
+                recordedAudio.startAnimation(animation);
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        recordedAudio.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                voiceNoteButton.setColorFilter(getResources().getColor(R.color.light_grey));
+
+
+            }
+        });
+
+
+
 
     }
 
@@ -429,18 +524,46 @@ public class CreateToDoActivity extends FragmentActivity {
                 super.onBackPressed();
                 addTaskButton.setText("");
                 addTaskButton.setBackground(getDrawable(R.drawable.ripple_rectangle_corners));
+                return;
 
             }else{
                 dateTimePicker.close();
+                return;
             }
-        }else{
+        }
+
+
 
             super.onBackPressed();
             addTaskButton.setText("");
             addTaskButton.setBackground(getDrawable(R.drawable.ripple_rectangle_corners));
 
-        }
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+
+                recordedAudio.setVisibility(View.VISIBLE);
+                Animation animation = AnimationUtils.loadAnimation(CreateToDoActivity.this, android.R.anim.slide_in_left);
+                recordedAudio.startAnimation(animation);
+
+                voiceNoteButton.setColorFilter(getResources().getColor(R.color.colorPrimary));
+                final Animation vibrateAnimation = AnimationUtils.loadAnimation(CreateToDoActivity.this, R.anim.vibrate);
+                voiceNoteButton.startAnimation(vibrateAnimation);
+
+                isAudioPresent = true;
+
+
+            } else if (resultCode == RESULT_CANCELED) {
+
+
+            }
+        }
+
+    }
 }
