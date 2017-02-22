@@ -61,6 +61,7 @@
         android:layout_weight="1"
         android:clickable="true"
         android:padding="4dp"
+        android:transitionName="record"
         android:foreground="?android:selectableItemBackground"
         android:background="@drawable/ripple_rectangle_transperant"
         android:src="@drawable/tool_icon_voice"/>

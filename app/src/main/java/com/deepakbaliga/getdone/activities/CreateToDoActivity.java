@@ -528,6 +528,7 @@ public class CreateToDoActivity extends FragmentActivity {
 
             }else{
                 dateTimePicker.close();
+                dateTimePicker=null;
                 return;
             }
         }
