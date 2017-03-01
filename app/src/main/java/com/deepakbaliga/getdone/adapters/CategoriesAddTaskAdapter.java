@@ -83,6 +83,8 @@ public class CategoriesAddTaskAdapter extends RecyclerView.Adapter<RecyclerView.
             holderSelected.itemView.setClickable(true);
 
 
+
+
         }else{
 
             CategoryViewHolder holderUnselected = (CategoryViewHolder) holder;

@@ -1,16 +1,36 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="com.deepakbaliga.getdone.fragments.ProjectsFragment"
+    >
+
+<com.deepakbaliga.getdone.customViews.ThinTextView
+    android:id="@+id/title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="24dp"
+    android:text="My Tasks"
+    android:layout_centerHorizontal="true"
+    android:textColor="@color/grey"
+    android:layout_margin="18dp"/>
+
+<ImageView
+    android:layout_width="22dp"
+    android:layout_height="22dp"
+    android:src="@drawable/ic_settings"
+    android:tint="@color/grey"
+    android:layout_alignParentRight="true"
+    android:layout_margin="18dp"/>
+
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/task_recyclerv_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.deepakbaliga.getdone.fragments.HomeFragment">
+    android:layout_margin="8dp"
+    android:layout_below="@+id/title"
+    android:paddingBottom="10dp"
+    android:clipToPadding="true"
+    />
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/task_recyclerv_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-
-
-
-</FrameLayout>
+</RelativeLayout>

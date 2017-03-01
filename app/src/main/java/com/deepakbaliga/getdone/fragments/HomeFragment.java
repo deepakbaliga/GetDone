@@ -4,14 +4,17 @@ package com.deepakbaliga.getdone.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.deepakbaliga.getdone.R;
+import com.deepakbaliga.getdone.adapters.TasksAdapter;
 import com.deepakbaliga.getdone.model.Task;
 import com.deepakbaliga.getdone.model.TaskDataStructure;
 import com.deepakbaliga.getdone.utilities.Constants;
@@ -38,6 +41,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
 
     LinearLayoutManager linearLayoutManager;
+    TasksAdapter adapter;
 
 
 
@@ -78,7 +82,10 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChange(RealmResults<Task> element) {
 
-            makeList(element);
+                adapter = new TasksAdapter(getActivity(), makeList(element));
+                recyclerView.setAdapter(adapter);
+
+
 
 
 
@@ -96,6 +103,7 @@ public class HomeFragment extends Fragment {
 
 
         linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
@@ -105,7 +113,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private void makeList(RealmResults<Task> elements){
+    private ArrayList<TaskDataStructure> makeList(RealmResults<Task> elements){
 
         ArrayList<TaskDataStructure> list =  new ArrayList<>();
 
@@ -133,6 +141,7 @@ public class HomeFragment extends Fragment {
             }
         }
 
+        return list;
     }
 
 

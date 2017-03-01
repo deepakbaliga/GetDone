@@ -3,9 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:translationZ="2dp"
-    app:contentPadding="4dp"
-    android:layout_margin="10dp">
+    app:contentPaddingLeft="8dp"
+    app:contentPaddingTop="8dp"
+    app:contentPaddingBottom="8dp"
+    app:cardCornerRadius="4dp"
+    android:clickable="true"
+    app:cardPreventCornerOverlap="false"
+    android:stateListAnimator="@drawable/lift_on_touch"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="14dp"
+    android:background="@android:color/white">
 
     <RelativeLayout
 
@@ -18,7 +26,6 @@
             android:layout_margin="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:layout_centerVertical="true"
             android:theme="@style/getDoneCheckBox"/>
 
@@ -40,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:text="Pay Airtel Postpaid Bill."
                 android:textColor="@color/dark_grey"
-                android:maxLines="2"
+                android:maxLines="3"
                 android:ellipsize="end"
                 android:textSize="20sp"
                 />
@@ -67,20 +74,20 @@
 
             <ImageView
                 android:id="@+id/comment_icon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
                 android:src="@drawable/tool_icon_comment"
-                android:tint="@color/light_grey"
+                android:tint="@color/grey"
                 android:layout_margin="8dp"/>
 
 
 
             <ImageView
                 android:id="@+id/reminder_icon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
                 android:src="@drawable/tool_icon_reminder"
-                android:tint="@color/light_grey"
+                android:tint="@color/grey"
                 android:layout_margin="8dp"/>
 
 
@@ -88,12 +95,14 @@
         </LinearLayout>
 
 
-        <view
+        <LinearLayout
+            android:orientation="vertical"
             android:id="@+id/category_color"
-            android:layout_width="4dp"
-            android:layout_height="32dp"
+            android:layout_width="2dp"
+            android:layout_height="40dp"
             android:background="@color/pomogranate"
             android:layout_centerVertical="true"
+            android:alpha="0.7"
             android:layout_alignParentEnd="true"/>
 
     </RelativeLayout>
