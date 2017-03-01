@@ -97,6 +97,7 @@ public class PictureTileAdapter extends RecyclerView.Adapter<PictureTileAdapter.
 
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.delete_picture);
             viewToAnimate.startAnimation(animation);
+            itemCallBack.onSelect(position);
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
@@ -106,7 +107,8 @@ public class PictureTileAdapter extends RecyclerView.Adapter<PictureTileAdapter.
                 @Override
                 public void onAnimationEnd(Animation animation) {
 
-                    itemCallBack.onSelect(position);
+
+                    notifyDataSetChanged();
 
 
                 }

@@ -32,11 +32,12 @@
     <color name="asbestos">#7f8c8d</color>
 
     <color name="grey">#aaa</color>
+    <color name="dark_grey">#939393</color>
     <color name="light_grey">#ddd</color>
 
 
 
-
+    <color name="pink">#ff5c97</color>
 
 
     <color name="picker_background">#3F51B5</color>

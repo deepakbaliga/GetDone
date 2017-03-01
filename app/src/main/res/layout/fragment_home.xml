@@ -5,20 +5,11 @@
     tools:context="com.deepakbaliga.getdone.fragments.HomeFragment">
 
 
-    <RelativeLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/task_recyclerv_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.deepakbaliga.getdone.customViews.ThinTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="HOME"
-            android:textColor="#aaa"
-            android:textSize="36sp"
-            android:layout_centerInParent="true"/>
-
-
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        />
 
 
 

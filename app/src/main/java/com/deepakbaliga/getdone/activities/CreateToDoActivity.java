@@ -43,6 +43,7 @@ import com.deepakbaliga.getdone.utilities.Pop;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -583,7 +584,7 @@ public class CreateToDoActivity extends FragmentActivity {
         if(isValid()){
 
 
-            Realm realm = Realm.getDefaultInstance();
+            final Realm realm = Realm.getDefaultInstance();
 
 
 
@@ -625,13 +626,10 @@ public class CreateToDoActivity extends FragmentActivity {
                         task.setSubTaskSet(false);
                     }
 
-                    RealmList<SubTask> realmTasks = new RealmList<>();
 
-                    for(SubTask s : subTasks){
-                        realmTasks.add(s);
-                    }
 
-                    task.setSubTasks(realmTasks);
+
+                    task.setSubTasks(SubTask.getRealList(bgRealm, subTasks));
 
 
                     if(fileUriList.size()>0){
@@ -640,24 +638,14 @@ public class CreateToDoActivity extends FragmentActivity {
                         task.setAttachmentSet(false);
                     }
 
-                    RealmList<RealmUri> imageURIs = new RealmList<>();
-                    for(Uri uri: fileUriList){
 
-                        imageURIs.add(new RealmUri(uri.getPath(), uri.getEncodedPath()));
+                    task.setImages(RealmUri.getRealList(bgRealm, fileUriList));
 
-                    }
-                    task.setImages(imageURIs);
 
                     task.setAudioSet(isAudioPresent);
                     task.setAudioUri(filePath);
 
                     task.setDateCreated(new Date());
-
-
-
-
-
-
 
 
                 }

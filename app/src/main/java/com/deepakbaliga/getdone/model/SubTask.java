@@ -1,5 +1,9 @@
 package com.deepakbaliga.getdone.model;
 
+import java.util.LinkedList;
+
+import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
@@ -33,5 +37,25 @@ public class SubTask  extends RealmObject {
 
     public void setSubTask(String subTask) {
         this.subTask = subTask;
+    }
+
+
+    public static RealmList<SubTask> getRealList(Realm realm, LinkedList<SubTask> subTasks){
+
+        RealmList<SubTask> mRealmList = new RealmList<>();
+
+        for(int i=0; i<subTasks.size(); i++){
+
+            SubTask subTask = realm.createObject(SubTask.class);
+            subTask.setId(subTasks.get(i).getId());
+            subTask.setSubTask(subTasks.get(i).getSubTask());
+            mRealmList.add(subTask);
+
+        }
+
+        return mRealmList;
+
+
+
     }
 }

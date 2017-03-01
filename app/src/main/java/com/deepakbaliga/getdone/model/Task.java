@@ -35,6 +35,8 @@ public class Task extends RealmObject {
     private boolean audioSet = false;
     private String audioUri = new String();
 
+    private boolean completed = false;
+
 
     private Date dateCreated;
 
@@ -165,5 +167,13 @@ public class Task extends RealmObject {
 
     public void setImages(RealmList<RealmUri> images) {
         this.images = images;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }
