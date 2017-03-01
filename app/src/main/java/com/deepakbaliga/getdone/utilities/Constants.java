@@ -7,4 +7,8 @@ package com.deepakbaliga.getdone.utilities;
 public class Constants {
 
     public static final String TAG = "GetDone";
+
+
+    public static final int ITEM_DAY = 1;
+    public static final int ITEM_CARD = 0;
 }

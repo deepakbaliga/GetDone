@@ -1,5 +1,8 @@
 package com.deepakbaliga.getdone.model;
 
+import android.text.format.DateUtils;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.realm.RealmList;
@@ -39,6 +42,9 @@ public class Task extends RealmObject {
 
 
     private Date dateCreated;
+
+
+
 
     public Task(long id, String task, Category category, boolean timeSet, Date date, boolean reminderSet, boolean subTaskSet, RealmList<SubTask> subTasks, boolean attachmentSet, RealmList<RealmUri> images, boolean audioSet, String audioUri, Date dateCreated) {
         this.id = id;
@@ -175,5 +181,22 @@ public class Task extends RealmObject {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+
+    public String getDateReadable(){
+
+        if(DateUtils.isToday(date.getTime())){
+            return "Today";
+        }else {
+
+
+            String pattern = "dd MMM EEEE";
+            SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+
+            return dateFormat.format(date);
+        }
+
+
     }
 }

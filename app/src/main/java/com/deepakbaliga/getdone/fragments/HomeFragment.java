@@ -13,7 +13,13 @@ import android.view.ViewGroup;
 
 import com.deepakbaliga.getdone.R;
 import com.deepakbaliga.getdone.model.Task;
+import com.deepakbaliga.getdone.model.TaskDataStructure;
+import com.deepakbaliga.getdone.utilities.Constants;
 import com.deepakbaliga.getdone.utilities.Pop;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +27,7 @@ import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,25 +72,18 @@ public class HomeFragment extends Fragment {
 
 
 
-        result = query.findAllAsync();
+        result = query.findAllSortedAsync("date", Sort.ASCENDING);
 
         result.addChangeListener(new RealmChangeListener<RealmResults<Task>>() {
             @Override
             public void onChange(RealmResults<Task> element) {
 
-                for(Task task : element){
+            makeList(element);
 
-                    Log.e("Task", task.getTask());
-                }
 
 
             }
         });
-
-
-
-
-
 
     }
 
@@ -103,5 +103,62 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
+
+    private void makeList(RealmResults<Task> elements){
+
+        ArrayList<TaskDataStructure> list =  new ArrayList<>();
+
+
+        //This will be the first ITEM
+        Date previousDate = removeTime(elements.get(0).getDate());
+        list.add(new TaskDataStructure(Constants.ITEM_DAY, elements.get(0).getDateReadable()));
+        list.add(new TaskDataStructure(Constants.ITEM_CARD, elements.get(0)));
+
+
+        for (int i = 1; i < elements.size(); i++) {
+
+            Date newDate = removeTime(elements.get(i).getDate());
+
+            if(sameDay(previousDate, newDate)){
+
+                list.add(new TaskDataStructure(Constants.ITEM_CARD, elements.get(i)));
+
+            }else {
+
+                list.add(new TaskDataStructure(Constants.ITEM_DAY, elements.get(i).getDateReadable()));
+                list.add(new TaskDataStructure(Constants.ITEM_CARD, elements.get(i)));
+                previousDate = newDate;
+
+            }
+        }
+
+    }
+
+
+    private   Date removeTime(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+
+    private boolean sameDay(Date dayONE, Date dayTWO){
+
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(dayONE);
+        cal2.setTime(dayTWO);
+
+
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+    }
+
+
+
 
 }

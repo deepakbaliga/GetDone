@@ -3,11 +3,14 @@ package com.deepakbaliga.getdone.adapters;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.deepakbaliga.getdone.R;
 import com.deepakbaliga.getdone.customViews.BoldTextView;
 import com.deepakbaliga.getdone.customViews.RegularTextView;
+
+import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,9 +19,33 @@ import butterknife.ButterKnife;
  * Created by deepakbaliga on 01/03/17.
  */
 
-public class TasksAdapter {
+public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
+
+
+
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
 
     public class TaskCardViewHolder extends RecyclerView.ViewHolder{
 
